@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using ExpectedObjects;
+using Lab;
 using Lab.Entities;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using System.Collections.Generic;
-using ExpectedObjects;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -25,7 +24,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products, product => product.Price > 200 && product.Price < 500);
+            var actual = products.JoeyWhere(product => product.Price > 200 && product.Price < 500);
 
             var expected = new List<Product>
             {
@@ -35,20 +34,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private List<TSource> JoeyWhere<TSource>(List<TSource> products, Func<TSource, bool> predicate)
-        {
-            var list = new List<TSource>();
-            foreach (var product in products)
-            {
-                if (predicate(product))
-                {
-                    list.Add(product);
-                }
-            }
-
-            return list;
         }
 
         [Test]
@@ -67,8 +52,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products,
-                product => product.Price > 200 && product.Price < 500 && product.Cost < 30);
+            var actual = products.JoeyWhere(product => product.Price > 200 && product.Price < 500 && product.Cost < 30);
 
             var expected = new List<Product>
             {
@@ -89,7 +73,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "May", LastName = "Chen"},
             };
 
-            var actual = JoeyWhere(employees,e => e.FirstName.Length < 5);
+            var actual = employees.JoeyWhere(e => e.FirstName.Length < 5);
 
             var expected = new List<Employee>
             {
