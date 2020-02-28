@@ -73,6 +73,34 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-      
+        [Test]
+        public void select_full_name()
+        {
+            var employees = new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"}
+            };
+
+            var actual = JoeySelectForEmployee(employees, employee => $"{employee.FirstName} {employee.LastName}");
+
+            var expected = new List<string>
+            {
+                "Joey Chen",
+                "Tom Li",
+                "David Chen",
+            };
+
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+
+        private IEnumerable<string> JoeySelectForEmployee(List<Employee> employees, Func<Employee, string> selector)
+        {
+            foreach (var employee in employees)
+            {
+                yield return selector(employee);
+            }
+        }
     }
 }
