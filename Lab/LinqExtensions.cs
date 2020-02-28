@@ -45,5 +45,15 @@ namespace Lab
 
             return result;
         }
+
+        public static IEnumerable<TSource> JoeySelectWithIndex<TSource>(this IEnumerable<TSource> urls, Func<TSource, int, TSource> selector)
+        {
+            var index = 0;
+            foreach (var url in urls)
+            {
+                yield return selector(url, index);
+                index++;
+            }
+        }
     }
 }

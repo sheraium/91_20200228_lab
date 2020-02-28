@@ -92,7 +92,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelectWithIndex(urls);
+            var actual = urls.JoeySelectWithIndex((url, index) => $"{index+1}. {url}:9191");
             var expected = new List<string>
             {
                 "1. http://tw.yahoo.com:9191",
@@ -102,11 +102,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private IEnumerable<string> JoeySelectWithIndex(IEnumerable<string> urls)
-        {
-            throw new NotImplementedException();
         }
     }
 }
