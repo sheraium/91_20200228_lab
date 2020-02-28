@@ -8,7 +8,7 @@ using System.Linq;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture()]
-    [Ignore("not yet")]
+    //[Ignore("not yet")]
     public class JoeySelectTests
     {
         [Test]
@@ -30,7 +30,10 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
         {
-            throw new System.NotImplementedException();
+            foreach (var url in urls)
+            {
+                    yield return url.Replace("http://", "https://");
+            }
         }
 
         private static IEnumerable<string> GetUrls()
@@ -49,6 +52,29 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Tom", LastName = "Li"},
                 new Employee {FirstName = "David", LastName = "Chen"}
             };
+        }
+
+
+        [Test]
+        public void append_port_9191_to_urls()
+        {
+            var urls = GetUrls();
+
+            var actual = JoeySelectWithPort(urls);
+            var expected = new List<string>
+            {
+                "http://tw.yahoo.com:9191",
+                "https://facebook.com:9191",
+                "https://twitter.com:9191",
+                "http://github.com:9191",
+            };
+
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+
+        private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
