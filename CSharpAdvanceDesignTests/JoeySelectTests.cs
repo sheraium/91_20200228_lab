@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -29,39 +28,13 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> selector)
-        {
-            foreach (var url in urls)
-            {
-                    yield return selector(url);
-            }
-        }
-
-        private static IEnumerable<string> GetUrls()
-        {
-            yield return "http://tw.yahoo.com";
-            yield return "https://facebook.com";
-            yield return "https://twitter.com";
-            yield return "http://github.com";
-        }
-
-        private static List<Employee> GetEmployees()
-        {
-            return new List<Employee>
-            {
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "David", LastName = "Chen"}
-            };
-        }
-
 
         [Test]
         public void append_port_9191_to_urls()
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, url=> url+ ":9191");
+            var actual = JoeySelect(urls, url => url + ":9191");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com:9191",
@@ -83,7 +56,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "David", LastName = "Chen"}
             };
 
-            var actual = JoeySelectForEmployee(employees, employee => $"{employee.FirstName} {employee.LastName}");
+            var actual = JoeySelect(employees, employee => $"{employee.FirstName} {employee.LastName}");
 
             var expected = new List<string>
             {
@@ -95,11 +68,29 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<string> JoeySelectForEmployee(List<Employee> employees, Func<Employee, string> selector)
+        private static List<Employee> GetEmployees()
         {
-            foreach (var employee in employees)
+            return new List<Employee>
             {
-                yield return selector(employee);
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"}
+            };
+        }
+
+        private static IEnumerable<string> GetUrls()
+        {
+            yield return "http://tw.yahoo.com";
+            yield return "https://facebook.com";
+            yield return "https://twitter.com";
+            yield return "http://github.com";
+        }
+
+        private IEnumerable<TResult> JoeySelect<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, TResult> selector)
+        {
+            foreach (var url in urls)
+            {
+                yield return selector(url);
             }
         }
     }
