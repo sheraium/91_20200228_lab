@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExpectedObjects;
+using Lab;
 using Lab.Entities;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, url => url.Replace("http://", "https://"));
+            var actual = urls.JoeySelect(url => url.Replace("http://", "https://"));
             var expected = new List<string>
             {
                 "https://tw.yahoo.com",
@@ -34,7 +35,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, url => url + ":9191");
+            var actual = urls.JoeySelect(url => url + ":9191");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com:9191",
@@ -56,7 +57,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "David", LastName = "Chen"}
             };
 
-            var actual = JoeySelect(employees, employee => $"{employee.FirstName} {employee.LastName}");
+            var actual = employees.JoeySelect(employee => $"{employee.FirstName} {employee.LastName}");
 
             var expected = new List<string>
             {
@@ -84,14 +85,6 @@ namespace CSharpAdvanceDesignTests
             yield return "https://facebook.com";
             yield return "https://twitter.com";
             yield return "http://github.com";
-        }
-
-        private IEnumerable<TResult> JoeySelect<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, TResult> selector)
-        {
-            foreach (var url in urls)
-            {
-                yield return selector(url);
-            }
         }
     }
 }

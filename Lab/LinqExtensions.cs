@@ -18,5 +18,13 @@ namespace Lab
 
             return list;
         }
+
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, TResult> selector)
+        {
+            foreach (var url in urls)
+            {
+                yield return selector(url);
+            }
+        }
     }
 }
