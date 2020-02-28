@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using ExpectedObjects;
+﻿using ExpectedObjects;
 using Lab;
 using Lab.Entities;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -87,15 +87,10 @@ namespace CSharpAdvanceDesignTests
         [Test]
         public void find_positive_number_the_first_one_and_skip_second_one_and_take_others()
         {
-            var numbers = new List<int> { 1, 2, 3, 4, -5 };
-            var actual = JoeyWhereWithIndex(numbers);
-            var expected = new List<int> { 1, 3, 4 };
+            var numbers = new List<int> {1, 2, 3, 4, -5};
+            var actual = numbers.JoeyWhere((number, index) => number > 0 && (index == 0 || index > 1));
+            var expected = new List<int> {1, 3, 4};
             expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private List<int> JoeyWhereWithIndex(List<int> numbers)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

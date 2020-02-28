@@ -19,12 +19,31 @@ namespace Lab
             return list;
         }
 
-        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, TResult> selector)
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls,
+            Func<TSource, TResult> selector)
         {
             foreach (var url in urls)
             {
                 yield return selector(url);
             }
+        }
+
+        public static List<TSource> JoeyWhere<TSource>(this IEnumerable<TSource> numbers,
+            Func<TSource, int, bool> predicate)
+        {
+            var result = new List<TSource>();
+            var index = 0;
+            foreach (var item in numbers)
+            {
+                if (predicate(item, index))
+                {
+                    result.Add(item);
+                }
+
+                index++;
+            }
+
+            return result;
         }
     }
 }
