@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CSharpAdvanceDesignTests
 {
-    [TestFixture()]
+    [TestFixture]
     public class JoeyWhereTests
     {
         [Test]

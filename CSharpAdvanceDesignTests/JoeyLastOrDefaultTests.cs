@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CSharpAdvanceDesignTests
 {
-    [TestFixture()]
+    [TestFixture]
     [Ignore("not yet")]
     public class JoeyLastOrDefaultTests
     {
