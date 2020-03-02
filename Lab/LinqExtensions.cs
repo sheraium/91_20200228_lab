@@ -5,7 +5,7 @@ namespace Lab
 {
     public static class LinqExtensions
     {
-        public static IEnumerable<T> JoeyWhere<T>(IEnumerable<T> source, Func<T, bool> predicate)
+        public static IEnumerable<T> JoeyWhere<T>(this IEnumerable<T> source, Func<T, bool> predicate)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
