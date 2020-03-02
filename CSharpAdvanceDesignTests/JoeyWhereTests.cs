@@ -1,8 +1,8 @@
-﻿using Lab.Entities;
+﻿using ExpectedObjects;
+using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
-using ExpectedObjects;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -38,7 +38,15 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Product> JoeyWhere(IEnumerable<Product> products)
         {
-            throw new System.NotImplementedException();
+            var enumerator = products.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (current.Price > 200 && current.Price < 500)
+                {
+                    yield return current;
+                }
+            }
         }
     }
 }
