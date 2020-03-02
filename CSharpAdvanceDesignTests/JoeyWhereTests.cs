@@ -1,8 +1,8 @@
-﻿using System;
-using ExpectedObjects;
+﻿using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using System;
 using System.Collections.Generic;
 
 namespace CSharpAdvanceDesignTests
@@ -25,7 +25,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products, current => current.Price > 200 && current.Price < 500);
+            var actual = JoeyWhere(products, product => product.Price > 200 && product.Price < 500);
 
             var expected = new List<Product>
             {
@@ -52,7 +52,8 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products, current => current.Price > 200 && current.Price < 500 && current.Cost<30);
+            var actual = JoeyWhere(products,
+                product => product.Price > 200 && product.Price < 500 && product.Cost < 30);
 
             var expected = new List<Product>
             {
@@ -61,9 +62,32 @@ namespace CSharpAdvanceDesignTests
 
             expected.ToExpectedObject().ShouldMatch(actual);
         }
-        private IEnumerable<Product> JoeyWhere(IEnumerable<Product> products, Func<Product, bool> predicate)
+
+        [Test]
+        public void Find_the_first_name_length_less_than_5()
         {
-            var enumerator = products.GetEnumerator();
+            var employees = new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "David", LastName = "Chen"},
+                new Employee {FirstName = "Claire", LastName = "Chen"},
+                new Employee {FirstName = "May", LastName = "Chen"},
+            };
+
+            var actual = JoeyWhere(employees, e => e.FirstName.Length < 5);
+
+            var expected = new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "May", LastName = "Chen"},
+            };
+
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+
+        private IEnumerable<T> JoeyWhere<T>(IEnumerable<T> source, Func<T, bool> predicate)
+        {
+            var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
