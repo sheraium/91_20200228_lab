@@ -2,6 +2,7 @@
 using Lab.Entities;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lab;
@@ -61,6 +62,25 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
+        }
+        [Test]
+        public void get_full_name_of_employees()
+        {
+            var employees = GetEmployees();
+            var actual = JoeySelect(employees, e => $"{e.FirstName} {e.LastName}");
+            var expected = new[]
+            {
+                "Joey Chen",
+                "Tom Li",
+                "David Chen",
+            };
+
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+
+        private IEnumerable<Employee> JoeySelect(IEnumerable source, Func<Employee, string> selector)
+        {
+            throw new NotImplementedException();
         }
 
         private static List<Employee> GetEmployees()
