@@ -33,7 +33,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelectWithPort(urls);
+            var actual = JoeySelectWithPort(urls, current => current+":9191");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com:9191",
@@ -45,13 +45,13 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
 
-        private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls)
+        private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls, Func<string, string> selector)
         {
             var enumerator = urls.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                yield return current+":9191";
+                yield return selector(current);
             }
 
         }
