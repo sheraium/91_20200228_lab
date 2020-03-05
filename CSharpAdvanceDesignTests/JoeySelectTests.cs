@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -16,7 +17,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, current => current.Replace("http:", "https:"));
+            var actual = urls.JoeySelect(current => current.Replace("http:", "https:"));
             var expected = new List<string>
             {
                 "https://tw.yahoo.com",
@@ -33,7 +34,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, x => x + ":9191");
+            var actual = urls.JoeySelect(x => x + ":9191");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com:9191",
@@ -50,7 +51,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, (current, index) => $"{index + 1}. {current}");
+            var actual = urls.JoeySelect((current, index) => $"{index + 1}. {current}");
             var expected = new List<string>
             {
                 "1. http://tw.yahoo.com",
@@ -60,18 +61,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
-        }
-
-        private IEnumerable<string> JoeySelect(IEnumerable<string> source, Func<string, int, string> selector)
-        {
-            var enumerator = source.GetEnumerator();
-            var index = 0;
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                yield return selector(current, index);
-                index++;
-            }
         }
 
         private static List<Employee> GetEmployees()
@@ -90,16 +79,6 @@ namespace CSharpAdvanceDesignTests
             yield return "https://facebook.com";
             yield return "https://twitter.com";
             yield return "http://github.com";
-        }
-
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> selector)
-        {
-            var enumerator = urls.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                yield return selector(current);
-            }
         }
     }
 }
