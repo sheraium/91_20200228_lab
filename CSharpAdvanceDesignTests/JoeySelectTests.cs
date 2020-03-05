@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ExpectedObjects;
+﻿using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -64,7 +64,14 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeySelectWithIndex(IEnumerable<string> source)
         {
-            throw new NotImplementedException();
+            var enumerator = source.GetEnumerator();
+            var index = 0;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                yield return $"{index + 1}. {current}";
+                index++;
+            }
         }
 
         private static List<Employee> GetEmployees()
