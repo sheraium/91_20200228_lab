@@ -17,5 +17,21 @@ namespace Lab
                 }
             }
         }
+
+        public static IEnumerable<T> JoeyWhere<T>(IEnumerable<T> source, Func<T, int, bool> predicate)
+        {
+            var enumerator = source.GetEnumerator();
+            var index = 0;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (predicate(current, index))
+                {
+                    yield return current;
+                }
+
+                index++;
+            }
+        }
     }
 }

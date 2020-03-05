@@ -1,8 +1,8 @@
-﻿using System;
-using ExpectedObjects;
+﻿using ExpectedObjects;
 using Lab;
 using Lab.Entities;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace CSharpAdvanceDesignTests
@@ -88,25 +88,9 @@ namespace CSharpAdvanceDesignTests
         public void find_the_first_one_and_skip_second_one_and_take_others_and_biggerThan_0()
         {
             var numbers = new List<int> {1, 2, 3, 4, 5};
-            var actual = JoeyWhereWithIndex(numbers, (item, index) => (index == 0 || index > 1) && item > 0);
+            var actual = LinqExtensions.JoeyWhere(numbers, (item, index) => (index == 0 || index > 1) && item > 0);
             var expected = new List<int> {1, 3, 4, 5};
             expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private IEnumerable<T> JoeyWhereWithIndex<T>(IEnumerable<T> numbers, Func<T, int, bool> predicate)
-        {
-            var enumerator = numbers.GetEnumerator();
-            var index = 0;
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                if (predicate(current, index))
-                {
-                    yield return current;
-                }
-
-                index++;
-            }
         }
     }
 }
