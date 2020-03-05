@@ -1,14 +1,14 @@
-﻿using ExpectedObjects;
-using Lab.Entities;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ExpectedObjects;
+using Lab.Entities;
+using NUnit.Framework;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
+    //[Ignore("not yet")]
     public class JoeySelectTests
     {
         [Test]
@@ -28,9 +28,14 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
+        private static List<Employee> GetEmployees()
         {
-            throw new System.NotImplementedException();
+            return new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"}
+            };
         }
 
         private static IEnumerable<string> GetUrls()
@@ -41,14 +46,15 @@ namespace CSharpAdvanceDesignTests
             yield return "http://github.com";
         }
 
-        private static List<Employee> GetEmployees()
+        private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
         {
-            return new List<Employee>
+            var enumerator = urls.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "David", LastName = "Chen"}
-            };
+                var current = enumerator.Current;
+                yield return current.Replace("http:", "https:");
+            }
+
         }
     }
 }
