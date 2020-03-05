@@ -16,7 +16,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls);
+            var actual = JoeySelect(urls, current => current.Replace("http:", "https:"));
             var expected = new List<string>
             {
                 "https://tw.yahoo.com",
@@ -33,7 +33,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelectWithPort(urls, current => current+":9191");
+            var actual = JoeySelectWithPort(urls, current => current + ":9191");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com:9191",
@@ -43,17 +43,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
-        }
-
-        private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls, Func<string, string> selector)
-        {
-            var enumerator = urls.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                yield return selector(current);
-            }
-
         }
 
         private static List<Employee> GetEmployees()
@@ -74,15 +63,24 @@ namespace CSharpAdvanceDesignTests
             yield return "http://github.com";
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
+        private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> selector)
         {
             var enumerator = urls.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                yield return current.Replace("http:", "https:");
+                yield return selector(current);
             }
+        }
 
+        private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls, Func<string, string> selector)
+        {
+            var enumerator = urls.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                yield return selector(current);
+            }
         }
     }
 }
