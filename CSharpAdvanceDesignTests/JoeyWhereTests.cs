@@ -93,7 +93,7 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<int> JoeyWhereWithIndex(IEnumerable<int> numbers, Func<int, int, bool> predicate)
+        private IEnumerable<T> JoeyWhereWithIndex<T>(IEnumerable<T> numbers, Func<T, int, bool> predicate)
         {
             var enumerator = numbers.GetEnumerator();
             var index = 0;
