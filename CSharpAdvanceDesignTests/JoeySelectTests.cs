@@ -75,12 +75,13 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls, Func<string, string> selector)
         {
-            var enumerator = urls.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                yield return selector(current);
-            }
+            //var enumerator = urls.GetEnumerator();
+            //while (enumerator.MoveNext())
+            //{
+            //    var current = enumerator.Current;
+            //    yield return selector(current);
+            //}
+            return JoeySelect(urls, selector);
         }
     }
 }
