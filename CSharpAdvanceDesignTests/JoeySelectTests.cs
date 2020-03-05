@@ -33,8 +33,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            Func<string, string> selector = current => current + ":9191";
-            var actual = JoeySelect(urls, selector);
+            var actual = JoeySelect(urls, x => x + ":9191");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com:9191",
@@ -44,6 +43,28 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
+        }
+
+        [Test]
+        public void select_with_seq_no()
+        {
+            var urls = GetUrls();
+
+            var actual = JoeySelectWithIndex(urls);
+            var expected = new List<string>
+            {
+                "1. http://tw.yahoo.com:9191",
+                "2. https://facebook.com:9191",
+                "3. https://twitter.com:9191",
+                "4. http://github.com:9191",
+            };
+
+            expected.ToExpectedObject().ShouldEqual(actual.ToList());
+        }
+
+        private IEnumerable<string> JoeySelectWithIndex(IEnumerable<string> source)
+        {
+            throw new NotImplementedException();
         }
 
         private static List<Employee> GetEmployees()
