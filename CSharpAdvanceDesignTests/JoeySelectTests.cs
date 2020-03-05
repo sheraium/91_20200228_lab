@@ -36,10 +36,10 @@ namespace CSharpAdvanceDesignTests
             var actual = JoeySelectWithPort(urls);
             var expected = new List<string>
             {
-                "https://tw.yahoo.com:9191",
+                "http://tw.yahoo.com:9191",
                 "https://facebook.com:9191",
                 "https://twitter.com:9191",
-                "https://github.com:9191",
+                "http://github.com:9191",
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
@@ -47,7 +47,13 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeySelectWithPort(IEnumerable<string> urls)
         {
-            throw new NotImplementedException();
+            var enumerator = urls.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                yield return current+":9191";
+            }
+
         }
 
         private static List<Employee> GetEmployees()
