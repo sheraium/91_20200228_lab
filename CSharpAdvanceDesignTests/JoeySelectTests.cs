@@ -1,11 +1,10 @@
 ﻿using ExpectedObjects;
+using Lab;
 using Lab.Entities;
 using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -63,11 +62,12 @@ namespace CSharpAdvanceDesignTests
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
+
         [Test]
         public void get_full_name_of_employees()
         {
             var employees = GetEmployees();
-            var actual = JoeySelect(employees, e => $"{e.FirstName} {e.LastName}");
+            var actual = LinqExtensions.JoeySelect(employees, e => $"{e.FirstName} {e.LastName}");
             var expected = new[]
             {
                 "Joey Chen",
@@ -76,17 +76,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private IEnumerable<string> JoeySelect(IEnumerable<Employee> source, Func<Employee, string> selector)
-        {
-            var enumerator = source.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                yield return selector(current);
-            }
-
         }
 
         private static List<Employee> GetEmployees()
