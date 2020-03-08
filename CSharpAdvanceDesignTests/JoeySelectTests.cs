@@ -78,9 +78,15 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable source, Func<Employee, string> selector)
+        private IEnumerable<string> JoeySelect(IEnumerable<Employee> source, Func<Employee, string> selector)
         {
-            throw new NotImplementedException();
+            var enumerator = source.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                yield return selector(current);
+            }
+
         }
 
         private static List<Employee> GetEmployees()
