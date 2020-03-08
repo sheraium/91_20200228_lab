@@ -57,6 +57,17 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
+        [Test]
+        public void take_4_names()
+        {
+            var names = new[] {"Tom", "Joey", "David"};
+
+            var actual = JoeyTake(names, 3);
+
+            var expected = new[] {"Tom", "Joey", "David"};
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+
         private IEnumerable<Employee> JoeyTake(IEnumerable<Employee> employees, int count)
         {
             var enumerator = employees.GetEnumerator();
