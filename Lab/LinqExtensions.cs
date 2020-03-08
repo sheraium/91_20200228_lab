@@ -35,7 +35,7 @@ namespace Lab
             }
         }
 
-        public static IEnumerable<string> JoeySelect(this IEnumerable<string> source, Func<string, int, string> selector)
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
         {
             var enumerator = source.GetEnumerator();
             var index = 0;
@@ -47,17 +47,7 @@ namespace Lab
             }
         }
 
-        public static IEnumerable<string> JoeySelect(this IEnumerable<string> source, Func<string, string> selector)
-        {
-            var enumerator = source.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                yield return selector(current);
-            }
-        }
-
-        public static IEnumerable<string> JoeySelect(this IEnumerable<Employee> source, Func<Employee, string> selector)
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
