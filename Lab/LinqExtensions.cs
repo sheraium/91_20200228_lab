@@ -57,7 +57,7 @@ namespace Lab
             }
         }
 
-        public static IEnumerable<string> JoeySelect(IEnumerable<Employee> source, Func<Employee, string> selector)
+        public static IEnumerable<string> JoeySelect(this IEnumerable<Employee> source, Func<Employee, string> selector)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
