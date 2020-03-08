@@ -62,13 +62,18 @@ namespace CSharpAdvanceDesignTests
         {
             var names = new[] {"Tom", "Joey", "David"};
 
-            var actual = JoeyTake(names, 3);
+            var actual = JoeyTakeWithString(names, 3);
 
             var expected = new[] {"Tom", "Joey", "David"};
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<Employee> JoeyTake(IEnumerable<Employee> employees, int count)
+        private IEnumerable<string> JoeyTakeWithString(IEnumerable<string> names, int i)
+        {
+            return JoeyTake(names, i);
+        }
+
+        private IEnumerable<TSource> JoeyTake<TSource>(IEnumerable<TSource> employees, int count)
         {
             var enumerator = employees.GetEnumerator();
             var index = 0;
