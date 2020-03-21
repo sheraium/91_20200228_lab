@@ -35,9 +35,19 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Employee> JoeySkip(IEnumerable<Employee> employees)
         {
-            throw new System.NotImplementedException();
-        }
+            var enumerator = employees.GetEnumerator();
+            var index = 0;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (index >= 2)
+                {
+                    yield return current;
+                }
 
+                index++;
+            }
+        }
 
         private static IEnumerable<Employee> GetEmployees()
         {
