@@ -1,8 +1,8 @@
-﻿using ExpectedObjects;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -55,6 +55,46 @@ namespace CSharpAdvanceDesignTests
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
+
+        [Test]
+        public void skip_5_numbers()
+        {
+            var numbers = new[] {1, 2, 3};
+            var actual = JoeySkip(numbers, 5);
+
+            var expected = new int[] { };
+
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+
+        private static IEnumerable<Employee> GetEmployees()
+        {
+            return new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"},
+                new Employee {FirstName = "Mike", LastName = "Chang"},
+                new Employee {FirstName = "Joseph", LastName = "Yao"},
+            };
+        }
+
+        private IEnumerable<int> JoeySkip(IEnumerable<int> numbers, int count)
+        {
+            var enumerator = numbers.GetEnumerator();
+            var index = 0;
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (index >= count)
+                {
+                    yield return current;
+                }
+
+                index++;
+            }
+        }
+
         private IEnumerable<Employee> JoeySkip(IEnumerable<Employee> employees, int count)
         {
             var enumerator = employees.GetEnumerator();
@@ -69,18 +109,6 @@ namespace CSharpAdvanceDesignTests
 
                 index++;
             }
-        }
-
-        private static IEnumerable<Employee> GetEmployees()
-        {
-            return new List<Employee>
-            {
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "David", LastName = "Chen"},
-                new Employee {FirstName = "Mike", LastName = "Chang"},
-                new Employee {FirstName = "Joseph", LastName = "Yao"},
-            };
         }
     }
 }
