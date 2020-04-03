@@ -54,7 +54,6 @@ namespace CSharpAdvanceDesignTests
             {
                 new Card {Kind = CardKind.Normal, Point = 2},
                 new Card {Kind = CardKind.Normal, Point = 3},
-                new Card {Kind = CardKind.Normal, Point = 4},
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
@@ -79,7 +78,7 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Card> JoeyTakeWhileCardPointLessThan4(IEnumerable<Card> cards)
         {
-            throw new System.NotImplementedException();
+            return JoeyTakeWhile(cards, x => x.Point < 4);
         }
     }
 }
