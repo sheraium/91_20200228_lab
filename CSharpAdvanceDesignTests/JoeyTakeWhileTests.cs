@@ -1,8 +1,8 @@
-﻿using ExpectedObjects;
+﻿using System;
+using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -23,7 +23,7 @@ namespace CSharpAdvanceDesignTests
                 new Card {Kind = CardKind.Normal, Point = 6},
             };
 
-            var actual = JoeyTakeWhile(cards);
+            var actual = JoeyTakeWhile(cards, current => current.Kind != CardKind.Separate);
 
             var expected = new List<Card>
             {
@@ -60,13 +60,13 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<Card> JoeyTakeWhile(IEnumerable<Card> cards)
+        private IEnumerable<Card> JoeyTakeWhile(IEnumerable<Card> cards, Func<Card, bool> predicate)
         {
             var enumerator = cards.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                if (current.Kind != CardKind.Separate)
+                if (predicate(current))
                 {
                     yield return current;
                 }
