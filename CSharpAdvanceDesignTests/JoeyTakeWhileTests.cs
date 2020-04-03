@@ -48,7 +48,7 @@ namespace CSharpAdvanceDesignTests
                 new Card {Kind = CardKind.Normal, Point = 6},
             };
 
-            var actual = JoeyTakeWhileCardPointLessThan4(cards);
+            var actual = JoeyTakeWhile(cards, x => x.Point < 4);
 
             var expected = new List<Card>
             {
@@ -74,11 +74,6 @@ namespace CSharpAdvanceDesignTests
                     yield break;
                 }
             }
-        }
-
-        private IEnumerable<Card> JoeyTakeWhileCardPointLessThan4(IEnumerable<Card> cards)
-        {
-            return JoeyTakeWhile(cards, x => x.Point < 4);
         }
     }
 }
