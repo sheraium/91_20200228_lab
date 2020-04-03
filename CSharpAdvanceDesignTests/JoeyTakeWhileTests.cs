@@ -37,7 +37,19 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Card> JoeyTakeWhile(IEnumerable<Card> cards)
         {
-            throw new System.NotImplementedException();
+            var enumerator = cards.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (current.Kind != CardKind.Separate)
+                {
+                    yield return current;
+                }
+                else
+                {
+                    yield break;
+                }
+            }
         }
     }
 }
