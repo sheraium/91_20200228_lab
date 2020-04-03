@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ExpectedObjects;
+using Lab;
 using Lab.Entities;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Joseph", LastName = "Yao"},
             };
 
-            var actual = JoeySkip(employees, 2);
+            var actual = employees.JoeySkip(2);
 
             var expected = new List<Employee>
             {
@@ -45,7 +46,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Joseph", LastName = "Yao"},
             };
 
-            var actual = JoeySkip(employees, 3);
+            var actual = employees.JoeySkip(3);
 
             var expected = new List<Employee>
             {
@@ -60,7 +61,7 @@ namespace CSharpAdvanceDesignTests
         public void skip_5_numbers()
         {
             var numbers = new[] {1, 2, 3};
-            var actual = JoeySkip(numbers, 5);
+            var actual = numbers.JoeySkip(5);
 
             var expected = new int[] { };
 
@@ -77,22 +78,6 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Mike", LastName = "Chang"},
                 new Employee {FirstName = "Joseph", LastName = "Yao"},
             };
-        }
-
-        private IEnumerable<TSource> JoeySkip<TSource>(IEnumerable<TSource> source, int count)
-        {
-            var enumerator = source.GetEnumerator();
-            var index = 0;
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                if (index >= count)
-                {
-                    yield return current;
-                }
-
-                index++;
-            }
         }
     }
 }
