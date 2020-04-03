@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lab.Entities;
 
 namespace Lab
 {
@@ -91,6 +92,23 @@ namespace Lab
                 }
 
                 index++;
+            }
+        }
+
+        public static IEnumerable<TSource> JoeyTakeWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            var enumerator = source.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (predicate(current))
+                {
+                    yield return current;
+                }
+                else
+                {
+                    yield break;
+                }
             }
         }
     }
